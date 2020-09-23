@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.appline.framework</groupId>
+    <artifactId>DNS-shop</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <!--Encoding-->
+        <encoding.type>UTF-8</encoding.type>
+        <project.build.sourceEcnoding>${encoding.type}</project.build.sourceEcnoding>
+        <project.reporting.outputEncoding>${encoding.type}</project.reporting.outputEncoding>
+
+        <!--Java version -->
+        <java-version>1.8</java-version>
+        <maven.compiler.cource>${java.version}</maven.compiler.cource>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <!--Dependencies version -->
+        <selenium-java-version>3.141.59</selenium-java-version>
+        <junit-version>4.13</junit-version>
+
+    </properties>
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium-java-version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${encoding.type}</encoding>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+
+</project>
