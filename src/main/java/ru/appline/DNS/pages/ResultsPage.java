@@ -11,7 +11,7 @@ public class ResultsPage extends SearchPage{
     private List<WebElement> listWebElements;
 
 
-    public void insertElement(String str){
+    public ProductCard insertElement(String str){
         for (WebElement elem : listWebElements){
             if (elem.getText().toLowerCase().contains(str.toLowerCase())) {
                 scrollToElement(elem);
@@ -19,5 +19,6 @@ public class ResultsPage extends SearchPage{
             }
             break;
         }
+        return app.getProductCard();
     }
 }

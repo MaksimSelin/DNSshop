@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.appline.DNS.Entities.ProductList;
 import ru.appline.DNS.managers.DriverManager;
+import ru.appline.DNS.managers.ManagerPages;
 
 
 public class SearchPage{
@@ -22,6 +23,8 @@ public class SearchPage{
     private WebElement cart;
 
     WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), 10);
+
+    protected ManagerPages app = ManagerPages.getManagerPages();
 
     public SearchPage(){
         PageFactory.initElements(DriverManager.getDriver(), this);
@@ -42,21 +45,31 @@ public class SearchPage{
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public void search(String product){
+    public ResultsPage searchList(String product){
 
         searchPanel.sendKeys(product);
         searchPanel.sendKeys(Keys.ENTER);
+        return app.getResultsPage();
     }
 
-    public void checkPrice(){
+    public ProductCard search(String product){
+
+        searchPanel.sendKeys(product);
+        searchPanel.sendKeys(Keys.ENTER);
+        return app.getProductCard();
+    }
+
+    public SearchPage checkPrice(){
         waitUntilElementToBeVisibilityOf(cart);
         int cartPrice = Integer.parseInt(cart.getText().replaceAll(" |₽",""));
         Assert.assertEquals("Проверка карзины",
                 cartPrice,
                 ProductList.sumPrice());
+        return this;
     }
 
-    public void clickCart(){
+    public CartPage clickCart(){
         cart.findElement(By.xpath("./..")).click();
+        return app.getCartPage();
     }
 }

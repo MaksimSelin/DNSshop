@@ -6,11 +6,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.appline.DNS.managers.DriverManager;
+import ru.appline.DNS.managers.ManagerPages;
 
 import java.util.concurrent.TimeUnit;
 
 public class Setup {
 
+    protected ManagerPages app = ManagerPages.getManagerPages();
 
     @Before
     public void setup(){

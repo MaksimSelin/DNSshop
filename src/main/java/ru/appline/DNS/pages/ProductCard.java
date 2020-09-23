@@ -34,6 +34,9 @@ public class ProductCard extends SearchPage{
     private WebElement button;
 
     private void scan(){
+        waitUntilElementToBeVisibilityOf(code);
+        waitUntilElementToBeVisibilityOf(price);
+        waitUntilElementToBeVisibilityOf(description);
         product = new Product(code.getText(), price.getText(), description.getText());
     }
 

@@ -23,7 +23,7 @@ public class CartPage extends SearchPage{
     WebElement infoElement;
 
 
-    public void checkWarranty(){
+    public CartPage checkWarranty(){
         for (Product product : ProductList.getList()){
             if (product.getWarranty()) {
                 for (WebElement element : list) {
@@ -34,9 +34,10 @@ public class CartPage extends SearchPage{
                 }
             }
         }
+        return this;
     }
 
-    public void checkPrice(){
+    public CartPage checkPrice(){
         for (Product product : ProductList.getList()){
             for (WebElement element : list){
                 scrollToElement(element);
@@ -51,9 +52,10 @@ public class CartPage extends SearchPage{
         }
     assertEquals("Check end price", Integer.parseInt(infoElement.getText().replaceAll(" |₽","")),
             ProductList.sumPrice());
+        return this;
     }
 
-    public void remove(String str){
+    public CartPage remove(String str){
         for (WebElement element : list){
             if (element.findElement(By.xpath("./../../div[@class='cart-items__product-name']")).getText()
                     .toLowerCase().contains(str.toLowerCase())){
@@ -75,10 +77,10 @@ public class CartPage extends SearchPage{
         });
 
         checkPrice();
-
+        return this;
     }
 
-    public void addCountProduct(String product, int count){
+    public CartPage addCountProduct(String product, int count){
         for (WebElement element : list){
             if (element.findElement(By.xpath("./../../div[@class='cart-items__product-name']")).getText()
                     .toLowerCase().contains(product.toLowerCase())) {
@@ -108,6 +110,7 @@ public class CartPage extends SearchPage{
             }
         }
         checkFullPrice();
+        return this;
     }
 
     private void checkFullPrice(){
@@ -116,7 +119,7 @@ public class CartPage extends SearchPage{
     }
 
 
-    public void restoreLastRemoved(){
+    public CartPage restoreLastRemoved(){
         WebElement restore = DriverManager.getDriver().findElement(By.xpath("//span[@class='restore-last-removed']"));
         restore.click();
 
@@ -128,6 +131,7 @@ public class CartPage extends SearchPage{
             }
         }
         checkFullPrice();
+        return this;
     }
 
 
