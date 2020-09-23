@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.appline.DNS.Entities.ProductList;
+import ru.appline.DNS.entities.ProductList;
 import ru.appline.DNS.managers.DriverManager;
 import ru.appline.DNS.managers.ManagerPages;
 

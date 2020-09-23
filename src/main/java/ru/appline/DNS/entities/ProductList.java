@@ -1,4 +1,4 @@
-package ru.appline.DNS.Entities;
+package ru.appline.DNS.entities;
 
 import java.util.ArrayList;
 import java.util.List;

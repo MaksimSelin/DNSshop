@@ -14,10 +14,24 @@ public class PropManager {
     private PropManager(){
         try {
             properties.load(new FileInputStream(new File("src/main/resources/"+
-                    System.getProperty("env", "property") +".property")));
+                    System.getProperty("env", "property") +".properties")));
         }
         catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public static PropManager getPropManager(){
+        if (propManager == null)
+            propManager = new PropManager();
+        return propManager;
+    }
+
+    public String getProperty(String key, String defaultValue){
+        return properties.getProperty(key, defaultValue);
+    }
+
+    public String getProperty(String key){
+        return properties.getProperty(key);
     }
 }
