@@ -6,7 +6,7 @@ import org.junit.Test;
 public class MainTest extends Setup {
 
     @Test
-    public void scenario(){
+    public void scenario() throws InterruptedException {
 
 
         app.getSearchPage().searchList("playstation")
@@ -22,6 +22,7 @@ public class MainTest extends Setup {
                 .remove("detroit")
                 .addCountProduct("playstation", 3)
                 .restoreLastRemoved();
+                Thread.sleep(2000);
 
 
     }

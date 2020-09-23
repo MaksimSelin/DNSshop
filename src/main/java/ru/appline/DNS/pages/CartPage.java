@@ -107,8 +107,9 @@ public class CartPage extends SearchPage {
 
     /**
      * Добавление количества продукта
+     *
      * @param product - название продукта
-     * @param count - количество
+     * @param count   - количество
      * @return
      */
     public CartPage addCountProduct(String product, int count) {
@@ -154,6 +155,7 @@ public class CartPage extends SearchPage {
 
     /**
      * вернуть последний удаленный товар
+     *
      * @return
      */
     public CartPage restoreLastRemoved() {
