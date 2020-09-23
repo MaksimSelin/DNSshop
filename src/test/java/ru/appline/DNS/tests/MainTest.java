@@ -1,19 +1,12 @@
 package ru.appline.DNS.tests;
 
 import org.junit.Test;
-import ru.appline.DNS.pages.CartPage;
-import ru.appline.DNS.pages.ProductCard;
-import ru.appline.DNS.pages.ResultsPage;
-import ru.appline.DNS.pages.SearchPage;
 
 
-public class MainTest extends Setup{
+public class MainTest extends Setup {
 
     @Test
-    public void scenario() throws InterruptedException {
-
-
-
+    public void scenario(){
 
 
         app.getSearchPage().searchList("playstation")

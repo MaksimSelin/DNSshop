@@ -10,7 +10,6 @@ import ru.appline.DNS.managers.ManagerPages;
 import ru.appline.DNS.managers.PropManager;
 import ru.appline.DNS.utils.PropConst;
 
-import java.util.concurrent.TimeUnit;
 
 public class Setup {
 
@@ -19,17 +18,17 @@ public class Setup {
     protected static PropManager propManager = PropManager.getPropManager();
 
     @BeforeClass
-    public static void setup(){
+    public static void setup() {
         InitManager.initFramework();
     }
 
     @Before
-    public void start(){
+    public void start() {
         DriverManager.getDriver().get(propManager.getProperty(PropConst.APP_URL));
     }
 
     @AfterClass
-    public static void tearDown(){
+    public static void tearDown() {
         InitManager.quitFramework();
     }
 }

@@ -14,17 +14,31 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class CartPage extends SearchPage{
+/**
+ * Страница карзины
+ */
+public class CartPage extends SearchPage {
 
+    /**
+     * список кодов всех продуктов
+     */
     @FindBy(xpath = "//div[@class='cart-items__product-code']/div")
     List<WebElement> list;
 
+    /**
+     * конечная сумма
+     */
     @FindBy(xpath = "//div[@class='total-amount-block total-amount__info-block']//span[@class='price__current']")
     WebElement infoElement;
 
 
-    public CartPage checkWarranty(){
-        for (Product product : ProductList.getList()){
+    /**
+     * Проверка на наличие гарантии
+     *
+     * @return
+     */
+    public CartPage checkWarranty() {
+        for (Product product : ProductList.getList()) {
             if (product.getWarranty()) {
                 for (WebElement element : list) {
                     if (product.getCode().equals(element.getText())) {
@@ -37,28 +51,39 @@ public class CartPage extends SearchPage{
         return this;
     }
 
-    public CartPage checkPrice(){
-        for (Product product : ProductList.getList()){
-            for (WebElement element : list){
+    /**
+     * проверка ценн на товарах и их суммы
+     *
+     * @return
+     */
+    public CartPage checkPrice() {
+        for (Product product : ProductList.getList()) {
+            for (WebElement element : list) {
                 scrollToElement(element);
                 waitUntilElementToBeVisibilityOf(element);
-                if (product.getCode().equals(element.getText())){
+                if (product.getCode().equals(element.getText())) {
                     waitUntilElementToBeVisibilityOf(element);
                     assertEquals("Check price", element.findElement(By.xpath("./../../..//span[@class='price__current']"))
-                                    .getText().replaceAll(" |₽",""),
-                            product.getPriceWithoutWarranty().replaceAll(" |₽",""));
+                                    .getText().replaceAll(" |₽", ""),
+                            product.getPriceWithoutWarranty().replaceAll(" |₽", ""));
                 }
             }
         }
-    assertEquals("Check end price", Integer.parseInt(infoElement.getText().replaceAll(" |₽","")),
-            ProductList.sumPrice());
+        assertEquals("Check end price", Integer.parseInt(infoElement.getText().replaceAll(" |₽", "")),
+                ProductList.sumPrice());
         return this;
     }
 
-    public CartPage remove(String str){
-        for (WebElement element : list){
+    /**
+     * Удаление из карзины
+     *
+     * @param str - название продукта, который необходимо удалить
+     * @return
+     */
+    public CartPage remove(String str) {
+        for (WebElement element : list) {
             if (element.findElement(By.xpath("./../../div[@class='cart-items__product-name']")).getText()
-                    .toLowerCase().contains(str.toLowerCase())){
+                    .toLowerCase().contains(str.toLowerCase())) {
                 for (Product productElement : ProductList.getList())
                     if (productElement.getCode().equals(element.getText()))
                         productElement.setCount(productElement.getCount() - 1);
@@ -80,13 +105,19 @@ public class CartPage extends SearchPage{
         return this;
     }
 
-    public CartPage addCountProduct(String product, int count){
-        for (WebElement element : list){
+    /**
+     * Добавление количества продукта
+     * @param product - название продукта
+     * @param count - количество
+     * @return
+     */
+    public CartPage addCountProduct(String product, int count) {
+        for (WebElement element : list) {
             if (element.findElement(By.xpath("./../../div[@class='cart-items__product-name']")).getText()
                     .toLowerCase().contains(product.toLowerCase())) {
 
                 scrollToElement(element);
-                for (int i = 0; i<count; i++){
+                for (int i = 0; i < count; i++) {
                     try {
                         waitUntilElementToBeClickable(element.findElement(By.xpath("./../../..//button[contains(@class, 'plus')]")));
                         String param = element.findElement(By.xpath("./../../..//input[@class='count-buttons__input']")).getAttribute("value");
@@ -101,9 +132,8 @@ public class CartPage extends SearchPage{
                         });
                         for (Product productElement : ProductList.getList())
                             if (productElement.getCode().equals(element.getText()))
-                            productElement.setCount(productElement.getCount()+1);
-                    }
-                    catch (TimeoutException e){
+                                productElement.setCount(productElement.getCount() + 1);
+                    } catch (TimeoutException e) {
                         break;
                     }
                 }
@@ -113,19 +143,26 @@ public class CartPage extends SearchPage{
         return this;
     }
 
-    private void checkFullPrice(){
+    /**
+     * внутренний метод для проверка цены
+     */
+    private void checkFullPrice() {
         assertEquals("Check full price", ProductList.sumPrice(),
-                Integer.parseInt(infoElement.getText().replaceAll(" |₽","")));
+                Integer.parseInt(infoElement.getText().replaceAll(" |₽", "")));
     }
 
 
-    public CartPage restoreLastRemoved(){
+    /**
+     * вернуть последний удаленный товар
+     * @return
+     */
+    public CartPage restoreLastRemoved() {
         WebElement restore = DriverManager.getDriver().findElement(By.xpath("//span[@class='restore-last-removed']"));
         restore.click();
 
-        for (WebElement element : list){
-            for (Product product : ProductList.getList()){
-                if (element.equals(product.getCode()) && product.getCount()==0 ){
+        for (WebElement element : list) {
+            for (Product product : ProductList.getList()) {
+                if (element.equals(product.getCode()) && product.getCount() == 0) {
                     product.setCount(1);
                 }
             }
@@ -133,7 +170,6 @@ public class CartPage extends SearchPage{
         checkFullPrice();
         return this;
     }
-
 
 
 }

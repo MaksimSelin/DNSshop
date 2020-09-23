@@ -1,5 +1,8 @@
 package ru.appline.DNS.utils;
 
+/**
+ * класс с константами
+ */
 public class PropConst {
 
     public static final String APP_URL = "app.url";

@@ -13,52 +13,83 @@ import ru.appline.DNS.managers.DriverManager;
 
 import java.util.List;
 
-public class ProductCard extends SearchPage{
+/**
+ * Страница с описание продукта
+ */
+public class ProductCardPage extends SearchPage {
 
     private Product product;
 
+    /**
+     * цена продукта
+     */
     @FindBy(xpath = "//span[contains(@class,'product-card-price__current')]")
     private WebElement price;
 
+    /**
+     * код продукта
+     */
     @FindBy(xpath = "//span[@data-product-param='code']")
     private WebElement code;
 
+    /**
+     * описание
+     */
     @FindBy(xpath = "//div[@class='price-item-description']/p")
     private WebElement description;
 
+    /**
+     *страховка
+     */
     @FindBy(xpath = "//select[@class='form-control select']")
-    private List <WebElement> list;
+    private List<WebElement> list;
 
+    /**
+     * кнопка купить
+     */
     @FindBy(xpath = "//button[text()='Купить']")
     private WebElement button;
 
-    private void scan(){
+    /**
+     * генерация продукта
+     */
+    private void scan() {
         waitUntilElementToBeVisibilityOf(code);
         waitUntilElementToBeVisibilityOf(price);
         waitUntilElementToBeVisibilityOf(description);
         product = new Product(code.getText(), price.getText(), description.getText());
     }
 
-    public ProductCard setWarranty(String val){
-        if (list.size()>0) {
+    /**
+     * установка гарантии
+     * @param val - значение гарантии ( смотреть на странице в селекторе )
+     * @return
+     */
+    public ProductCardPage setWarranty(String val) {
+        if (list.size() > 0) {
             scan();
             Select select = new Select(list.get(0));
             select.selectByValue(val);
             wait.until(new ExpectedCondition<Boolean>() {
                 public Boolean apply(WebDriver driver) {
-                    return ! product.getPrice().equals(price.getText());
-                }});
+                    return !product.getPrice().equals(price.getText());
+                }
+            });
             product.setWarranty(true);
             addToList(product);
         }
         return this;
     }
 
-    public ProductCard buy(){
+    /**
+     * нажать купить
+     * @return
+     */
+    public ProductCardPage buy() {
         scan();
         product.setPriceWithoutWarranty(price.getText());
         addToList(product);
-        if(isElementPresent()) {
+        if (isElementPresent()) {
             String cartPrice = DriverManager.getDriver()
                     .findElement(By.xpath("//span[@class='cart-link__price']")).getText();
             button.click();
@@ -68,17 +99,20 @@ public class ProductCard extends SearchPage{
                             .findElement(By.xpath("//span[@class='cart-link__price']")).getText());
                 }
             });
-        }
-        else button.click();
+        } else button.click();
         return this;
     }
 
-    private void addToList(Product product){
-        if (ProductList.getList().contains(product)){
-            for (Product prod : ProductList.getList()){
+    /**
+     * внутренний метод для сохранения продукта
+     * @param product
+     */
+    private void addToList(Product product) {
+        if (ProductList.getList().contains(product)) {
+            for (Product prod : ProductList.getList()) {
                 if (prod.equals(product)) {
                     product.setPriceWithoutWarranty(prod.getPrice());
-                    if (prod.getWarranty()){
+                    if (prod.getWarranty()) {
                         product.setWarranty(true);
                     }
                 }
@@ -88,17 +122,19 @@ public class ProductCard extends SearchPage{
         ProductList.getList().add(product);
     }
 
-    private boolean isElementPresent(){
+    /**
+     * проверка наличия элемента
+     * @return
+     */
+    private boolean isElementPresent() {
         try {
             DriverManager.getDriver()
                     .findElement(By.xpath("//span[@class='cart-link__price']"));
             return true;
-        }
-        catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return false;
         }
     }
-
 
 
 }
